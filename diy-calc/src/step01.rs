@@ -1,14 +1,14 @@
 use std::io::stdin;
-fn main(){
+fn main() {
     let mut buf = String::new();
 
     let _ = stdin().read_line(&mut buf);
 
     let trimmed = buf.trim();
-    match parse_input(trimmed){
+    match parse_input(trimmed) {
         Ok(num) => {
-            println!("{}",num);
-        },
+            println!("{}", num);
+        }
         Err(_) => {}
     }
 }
@@ -18,7 +18,7 @@ fn parse_input(input: &str) -> Result<i32, std::num::ParseIntError> {
 }
 
 #[cfg(test)]
-mod tests{
+mod tests {
     use super::*;
 
     #[test]
