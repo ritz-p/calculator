@@ -1,7 +1,7 @@
 # Rust で自作電卓を作ってみる
 - [x] step01
 - [x] step02
-- [ ] step03
+- [x] step03
 - [ ] step04
 - [ ] step05
 - [ ] step06

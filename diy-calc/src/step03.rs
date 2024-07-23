@@ -7,14 +7,25 @@ fn main() {
 
     let input = parse_input(&buf, bytes_read);
 
-    if let Some(c) = input {
-        println!("{}", c as i32 - '0' as i32);
+    if let Some(num) = input {
+        println!("{}", num);
     }
 }
 
-fn parse_input(buffer: &[u8], bytes: usize) -> Option<char> {
+fn parse_input(buffer: &[u8], bytes: usize) -> Option<u32> {
     let input = String::from_utf8_lossy(&buffer[..bytes]);
-    input.chars().next()
+    let mut chars = input.chars();
+    let mut res = 0;
+    while let Some(c) = chars.next() {
+        if c.is_digit(10) {
+            if let Some(num) = c.to_digit(10) {
+                res = res * 10 + num;
+            }
+        } else {
+            break;
+        }
+    }
+    Some(res)
 }
 
 #[cfg(test)]
@@ -40,6 +51,20 @@ mod tests {
     fn test_02() {
         let input = string_to_fixed_buffer("42");
         let res = parse_input(&input, 4);
-        assert_eq!(res.unwrap().to_string(), "4");
+        assert_eq!(res.unwrap().to_string(), "42");
+    }
+
+    #[test]
+    fn test_03() {
+        let input = string_to_fixed_buffer("123");
+        let res = parse_input(&input, 6);
+        assert_eq!(res.unwrap().to_string(), "123");
+    }
+
+    #[test]
+    fn test_04() {
+        let input = string_to_fixed_buffer("12+34");
+        let res = parse_input(&input, 10);
+        assert_eq!(res.unwrap().to_string(), "12");
     }
 }
