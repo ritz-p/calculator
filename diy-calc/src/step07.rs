@@ -17,10 +17,9 @@ fn main() {
 
 fn calc(input: u32, buffer: &[u8], bytes_read: usize, read_position: &mut usize) -> u32 {
     let mut res = input;
-    if let Some(c) = String::from_utf8_lossy(&buffer[*read_position..bytes_read])
-        .chars()
-        .next()
-    {
+    let binding = String::from_utf8_lossy(&buffer[*read_position..bytes_read]);
+    let mut chars = binding.chars();
+    while let Some(c) = chars.next() {
         match c {
             '+' => {
                 *read_position += 1;
@@ -87,34 +86,23 @@ mod tests {
 
     #[test]
     fn test_03() {
-        let input = string_to_fixed_buffer("123+456");
-        let mut read_position = 0;
-        let mut res = parse_input(&input, 14, &mut read_position);
-        if let Some(ref mut num) = res {
-            *num = calc(*num, &input, 14, &mut read_position);
-        }
-        assert_eq!(res, Some(579));
-    }
-
-    #[test]
-    fn test_04() {
-        let input = string_to_fixed_buffer("579");
-        let mut read_position = 0;
-        let mut res = parse_input(&input, 6, &mut read_position);
-        if let Some(ref mut num) = res {
-            *num = calc(*num, &input, 6, &mut read_position);
-        }
-        assert_eq!(res, Some(579));
-    }
-
-    #[test]
-    fn test_05() {
         let input = string_to_fixed_buffer("1+2+3");
         let mut read_position = 0;
         let mut res = parse_input(&input, 10, &mut read_position);
         if let Some(ref mut num) = res {
             *num = calc(*num, &input, 10, &mut read_position);
         }
-        assert_eq!(res, Some(3));
+        assert_eq!(res, Some(6));
+    }
+
+    #[test]
+    fn test_04() {
+        let input = string_to_fixed_buffer("1+2+3+4+5+6+7+8+9+10");
+        let mut read_position = 0;
+        let mut res = parse_input(&input, 40, &mut read_position);
+        if let Some(ref mut num) = res {
+            *num = calc(*num, &input, 40, &mut read_position);
+        }
+        assert_eq!(res, Some(55));
     }
 }

@@ -4,8 +4,8 @@
 - [x] step03
 - [x] step04
 - [x] step05
-- [ ] step06
-- [ ] step07
+- [x] step06
+- [x] step07
 - [ ] step08
 - [ ] step09
 - [ ] step10

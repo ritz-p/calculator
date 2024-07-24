@@ -8,15 +8,15 @@ fn main() {
 
     let mut read_position = 0;
 
-    let input = parse_input(&buf, bytes_read,&mut read_position);
+    let input = parse_input(&buf, bytes_read, &mut read_position);
 
     if let Some(num) = input {
         println!("{}", num);
     }
-    println!("{}",read_position);
+    println!("{}", read_position);
 }
 
-fn parse_input(buffer: &[u8], bytes: usize,read_position: &mut usize) -> Option<u32> {
+fn parse_input(buffer: &[u8], bytes: usize, read_position: &mut usize) -> Option<u32> {
     let input = String::from_utf8_lossy(&buffer[*read_position..bytes]);
     let mut chars = input.chars();
     let mut res = 0;
@@ -49,7 +49,7 @@ mod tests {
     fn test_01() {
         let input = string_to_fixed_buffer("1");
         let mut read_position = 0;
-        let res = parse_input(&input, 2,&mut read_position);
+        let res = parse_input(&input, 2, &mut read_position);
         assert_eq!(res.unwrap().to_string(), "1");
     }
 
@@ -57,7 +57,7 @@ mod tests {
     fn test_02() {
         let input = string_to_fixed_buffer("42");
         let mut read_position = 0;
-        let res = parse_input(&input, 4,&mut read_position);
+        let res = parse_input(&input, 4, &mut read_position);
         assert_eq!(res.unwrap().to_string(), "42");
     }
 
@@ -65,7 +65,7 @@ mod tests {
     fn test_03() {
         let input = string_to_fixed_buffer("123");
         let mut read_position = 0;
-        let res = parse_input(&input, 6,&mut read_position);
+        let res = parse_input(&input, 6, &mut read_position);
         assert_eq!(res.unwrap().to_string(), "123");
     }
 
@@ -73,7 +73,7 @@ mod tests {
     fn test_04() {
         let input = string_to_fixed_buffer("12+34");
         let mut read_position = 0;
-        let res = parse_input(&input, 10,&mut read_position);
+        let res = parse_input(&input, 10, &mut read_position);
         assert_eq!(res.unwrap().to_string(), "12");
     }
 }
