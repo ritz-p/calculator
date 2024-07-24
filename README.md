@@ -6,7 +6,7 @@
 - [x] step05
 - [x] step06
 - [x] step07
-- [ ] step08
+- [x] step08
 - [ ] step09
 - [ ] step10
 - [ ] step11
