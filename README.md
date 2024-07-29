@@ -10,7 +10,7 @@
 - [x] step09
 - [x] step10
 - [x] step11
-- [ ] step12
+- [x] step12
 - [ ] step13
 - [ ] step14
 - [ ] step15
