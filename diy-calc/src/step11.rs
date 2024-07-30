@@ -23,13 +23,13 @@ fn adjustment(input: i32, buffer: &[u8], bytes_read: usize, read_position: &mut 
         match c {
             '+' => {
                 *read_position += 1;
-                if let Some(add) = parse_input(buffer, bytes_read, read_position){
+                if let Some(add) = parse_input(buffer, bytes_read, read_position) {
                     res += mul_and_div(add, buffer, bytes_read, read_position);
                 }
             }
             '-' => {
                 *read_position += 1;
-                if let Some(sub) = parse_input(buffer, bytes_read, read_position){
+                if let Some(sub) = parse_input(buffer, bytes_read, read_position) {
                     res -= mul_and_div(sub, buffer, bytes_read, read_position);
                 }
             }
@@ -56,7 +56,7 @@ fn mul_and_div(input: i32, buffer: &[u8], bytes_read: usize, read_position: &mut
                 if let Some(div) = parse_input(buffer, bytes_read, read_position) {
                     res /= div;
                 }
-            },
+            }
             '+' | '-' => {
                 break;
             }

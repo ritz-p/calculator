@@ -1,4 +1,7 @@
-use std::{io::{stdin, Read}, str::from_utf8};
+use std::{
+    io::{stdin, Read},
+    str::from_utf8,
+};
 const BUFFER_SIZE: usize = 256;
 
 fn main() {
@@ -23,13 +26,13 @@ fn adjustment(input: i32, buffer: &[u8], bytes_read: usize, read_position: &mut 
         match c {
             '+' => {
                 *read_position += 1;
-                if let Some(add) = parse_input(buffer, bytes_read, read_position){
+                if let Some(add) = parse_input(buffer, bytes_read, read_position) {
                     res += mul_and_div(add, buffer, bytes_read, read_position);
                 }
             }
             '-' => {
                 *read_position += 1;
-                if let Some(sub) = parse_input(buffer, bytes_read, read_position){
+                if let Some(sub) = parse_input(buffer, bytes_read, read_position) {
                     res -= mul_and_div(sub, buffer, bytes_read, read_position);
                 }
             }
@@ -56,7 +59,7 @@ fn mul_and_div(input: i32, buffer: &[u8], bytes_read: usize, read_position: &mut
                 if let Some(div) = parse_input(buffer, bytes_read, read_position) {
                     res /= div;
                 }
-            },
+            }
             '+' | '-' => {
                 break;
             }
@@ -79,13 +82,14 @@ fn parse_input(buffer: &[u8], bytes_read: usize, read_position: &mut usize) -> O
         start += 1;
     }
 
-    let end = buffer[start..bytes_read].iter()
+    let end = buffer[start..bytes_read]
+        .iter()
         .position(|&c| !c.is_ascii_digit())
         .map_or(bytes_read, |pos| start + pos);
     let number_str = &buffer[start..end];
     let number_str = from_utf8(number_str).ok()?;
     *read_position = end;
-    
+
     number_str.parse::<i32>().ok().map(|num| num * sign)
 }
 
@@ -124,5 +128,4 @@ mod tests {
         let res = adjustment(0, &buffer, 10, &mut read_position);
         assert_eq!(res, -42);
     }
-
 }

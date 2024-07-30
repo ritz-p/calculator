@@ -62,3 +62,7 @@ path = "src/step13.rs"
 [[bin]]
 name = "step14"
 path = "src/step14.rs"
+
+[[bin]]
+name = "step15"
+path = "src/step15.rs"

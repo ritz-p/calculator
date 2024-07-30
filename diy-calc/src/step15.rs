@@ -58,19 +58,15 @@ fn mul_and_div(input: i32, buffer: &[u8], bytes_read: usize, read_position: &mut
         match c {
             '*' => {
                 *read_position += 1;
-                if let Some(mul) = parse_input(buffer, bytes_read, read_position) {
+                if let Some(mul) = bracket(buffer, bytes_read, read_position) {
                     res *= mul;
                 }
             }
             '/' => {
                 *read_position += 1;
-                if let Some(div) = parse_input(buffer, bytes_read, read_position) {
+                if let Some(div) = bracket(buffer, bytes_read, read_position) {
                     res /= div;
                 }
-            }
-            '(' => {
-                *read_position += 1;
-                res += adjustment(input, buffer, bytes_read, read_position);
             }
             '+' | '-' | ')' => {
                 break;
@@ -79,6 +75,23 @@ fn mul_and_div(input: i32, buffer: &[u8], bytes_read: usize, read_position: &mut
         }
     }
     res
+}
+
+fn bracket(buffer: &[u8], bytes_read: usize, read_position: &mut usize) -> Option<i32> {
+    while *read_position < bytes_read {
+        match buffer[*read_position] {
+            b'(' => {
+                *read_position += 1;
+                return Some(adjustment(0, buffer, bytes_read, read_position));
+            }
+            b')' => {
+                *read_position += 1;
+                return None;
+            }
+            _ => return parse_input(buffer, bytes_read, read_position),
+        }
+    }
+    None
 }
 
 fn parse_input(buffer: &[u8], bytes_read: usize, read_position: &mut usize) -> Option<i32> {
@@ -127,9 +140,25 @@ mod tests {
 
     #[test]
     fn test_02() {
-        let buffer = string_to_fixed_buffer("(10*4+2)");
+        let buffer = string_to_fixed_buffer("(42)");
         let mut read_position = 0;
-        let res = adjustment(0, &buffer, 16, &mut read_position);
+        let res = adjustment(0, &buffer, 8, &mut read_position);
+        assert_eq!(res, 42);
+    }
+
+    #[test]
+    fn test_03() {
+        let buffer = string_to_fixed_buffer("((42))");
+        let mut read_position = 0;
+        let res = adjustment(0, &buffer, 12, &mut read_position);
+        assert_eq!(res, 42);
+    }
+
+    #[test]
+    fn test_04() {
+        let buffer = string_to_fixed_buffer("2*(10*2+1)");
+        let mut read_position = 0;
+        let res = adjustment(0, &buffer, 20, &mut read_position);
         assert_eq!(res, 42);
     }
 }
